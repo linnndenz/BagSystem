@@ -118,9 +118,11 @@ public class BagController : System.Object
     public bool IsOwnItem(int itemid){}
 }
 ```
-至此背包的数据管理类创建完毕。
-<h2 id="ui">UI显示</h2>
+至此背包的数据管理类创建完毕。  
 
+<br>
+<br>
+<h2 id="ui">UI显示</h2>
 接下来进入UI阶段，UI阶段重点在于和数据类的链接、背包的展示
 先做一个UI的slot：
 ```c#
@@ -171,50 +173,50 @@ public void UseItem(){}
 每次交互时更新UI显示（重新从数据管理类中拉取数据，十分麻烦，尚待优化）：
 ```c#
 private void UpdateBagDisplay()
-    {
-        //清空格子内容，格子按键设置为不可交互
-        for (int i = 0; i < slots.Length; i++) {
-            for (int j = 0; j < slots[i].Length; j++) {
-                slots[i][j].btn.interactable = false;
-                slots[i][j].img.sprite = null;
-                slots[i][j].text.text = "";
-                slots[i][j].onPointerEnter.RemoveAllListeners();
-                slots[i][j].onPointerExit.RemoveAllListeners();
-            }
-        }
-        cnt0 = cnt1 = cnt2 = cnt3 = 0;//计数归零
-        if (EmoDataManager.BagContent.Count <= 0) return;
-        foreach (var item in EmoDataManager.BagContent) {
-            int temp = 0;
-            switch (ItemManager.LookupItem(item.itemId).type) {
-                case ItemType.FRUIT:
-                case ItemType.FISH:
-                    slots[0][cnt0].btn.interactable = true;
-                    slots[0][cnt0].img.sprite = ItemManager.LookupItem(item.itemId).ico;
-                    slots[0][cnt0].text.text = item.num.ToString();
-                    slots[0][cnt0].itemId = item.itemId;
-
-                    temp = cnt0;
-                    slots[0][cnt0].onPointerEnter.AddListener(() => PointerEnter(0, temp));
-                    slots[0][cnt0].onPointerExit.AddListener(() => PointerExit());
-
-                    cnt0++;
-                    break;
-                    
-                case ItemType.CONSUMABLE:
-                case ItemType.SAPLING:
-                    break;
-                    
-                case ItemType.SUNDRY:
-                case ItemType.QUESTNEED:
-                    break;
-
-                case ItemType.UNCONSUMABLE:
-                    break;
-                    
-                default:
-                    break;
-            }
+{
+    //清空格子内容，格子按键设置为不可交互
+    for (int i = 0; i < slots.Length; i++) {
+        for (int j = 0; j < slots[i].Length; j++) {
+            slots[i][j].btn.interactable = false;
+            slots[i][j].img.sprite = null;
+            slots[i][j].text.text = "";
+            slots[i][j].onPointerEnter.RemoveAllListeners();
+            slots[i][j].onPointerExit.RemoveAllListeners();
         }
     }
+    cnt0 = cnt1 = cnt2 = cnt3 = 0;//计数归零
+    if (EmoDataManager.BagContent.Count <= 0) return;
+    foreach (var item in EmoDataManager.BagContent) {
+        int temp = 0;
+        switch (ItemManager.LookupItem(item.itemId).type) {
+            case ItemType.FRUIT:
+            case ItemType.FISH:
+                slots[0][cnt0].btn.interactable = true;
+                slots[0][cnt0].img.sprite = ItemManager.LookupItem(item.itemId).ico;
+                slots[0][cnt0].text.text = item.num.ToString();
+                slots[0][cnt0].itemId = item.itemId;
+
+                temp = cnt0;
+                slots[0][cnt0].onPointerEnter.AddListener(() => PointerEnter(0, temp));
+                slots[0][cnt0].onPointerExit.AddListener(() => PointerExit());
+
+                cnt0++;
+                break;
+                
+            case ItemType.CONSUMABLE:
+            case ItemType.SAPLING:
+                break;
+                
+            case ItemType.SUNDRY:
+            case ItemType.QUESTNEED:
+                break;
+
+            case ItemType.UNCONSUMABLE:
+                break;
+                
+            default:
+                break;
+        }
+    }
+}
 ```
