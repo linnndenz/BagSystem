@@ -5,7 +5,7 @@ using UnityEngine;
 
 //精灵背包资产数据，函数外部引用只用id
 [Serializable]
-public class EmoBagController : System.Object
+public class BagController : System.Object
 {
     public List<Slot> bagContent;
 
