@@ -125,6 +125,7 @@ public class BagController : System.Object
 <h2 id="ui">UI显示</h2>
 接下来进入UI阶段，UI阶段重点在于和数据类的链接、背包的展示
 先做一个UI的slot：
+
 ```c#
 public class BagSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
